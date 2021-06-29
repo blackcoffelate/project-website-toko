@@ -1,3 +1,23 @@
+<?php
+
+require_once "admin/function/connection.php";
+
+session_start();
+
+if(isset($_SESSION['username'])){
+  if($_SESSION['role'] == '0'){
+    header('location: ./admin');
+  }else{
+    header('location: ./user');
+  }
+}
+
+if (isset($_POST['username']) && isset($_POST['password'])){
+  require_once "admin/function/login.php";
+}
+
+?>
+
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -40,23 +60,26 @@
             <div class="content-error">
                 <div class="hpanel">
                     <div class="panel-body">
-                        <form action="#" id="loginForm">
+                        <form id="loginForm" method="POST">
                             <div class="form-group">
                                 <label class="control-label" for="username">Username</label>
-                                <input type="text" placeholder="example@gmail.com" title="Please enter you username" required="" value="" name="username" id="username" class="form-control">
+                                <input type="text" placeholder="username" title="Please enter you username" required="" value="" name="username" id="username" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="password">Password</label>
                                 <input type="password" title="Please enter your password" placeholder="******" required="" value="" name="password" id="password" class="form-control">
                             </div>
-                            <!-- <button class="btn btn-success btn-block loginbtn">Login</button> -->
-                            <a href="admin" class="btn btn-success btn-block loginbtn">Login</a>
+                            <button type="submit" class="btn btn-success btn-block loginbtn">
+                                Sign In
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="text-center login-footer">
-                <p>Copyright © 2021. All rights reserved.</p>
+                <p>Copyright © <script>
+                    document.write(new Date().getFullYear())
+                    </script>. All rights reserved.</p>
             </div>
         </div>
     </div>

@@ -1,3 +1,14 @@
+<?php
+
+require_once  "function/session.php";
+
+$access = $_SESSION['role'];
+
+if(isset($_POST['nama_lengkap'])){
+    require_once "function/anggota_add.php";
+}
+
+?>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -71,43 +82,34 @@
                                                 <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="all-form-element-inner">
-                                                            <form action="#">
+                                                            <form method="POST">
                                                                 <div class="form-group-inner">
                                                                     <div class="row">
-                                                                        <div
-                                                                            class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label
-                                                                                class="login2 pull-right pull-right-pro">Nama Anggota</label>
+                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                            <label class="login2 pull-right pull-right-pro">Nama Anggota</label>
                                                                         </div>
-                                                                        <div
-                                                                            class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                            <input type="text" class="form-control" />
+                                                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                            <input type="text" class="form-control" name="nama_lengkap"/>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group-inner">
                                                                     <div class="row">
-                                                                        <div
-                                                                            class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label
-                                                                                class="login2 pull-right pull-right-pro">Alamat</label>
+                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                            <label class="login2 pull-right pull-right-pro">Nomor Telepon</label>
                                                                         </div>
-                                                                        <div
-                                                                            class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                            <input type="text" class="form-control" />
+                                                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                            <input type="text" class="form-control" name="nomor_telp" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group-inner">
                                                                     <div class="row">
-                                                                        <div
-                                                                            class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label
-                                                                                class="login2 pull-right pull-right-pro">Nomor Telepon</label>
+                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                            <label class="login2 pull-right pull-right-pro">Alamat</label>
                                                                         </div>
-                                                                        <div
-                                                                            class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                            <input type="text" class="form-control" />
+                                                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                            <input type="text" class="form-control" name="alamat" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -116,13 +118,9 @@
                                                                         <div class="row">
                                                                             <div class="col-lg-3"></div>
                                                                             <div class="col-lg-9">
-                                                                                <div
-                                                                                    class="login-horizental cancel-wp pull-left form-bc-ele">
-                                                                                    <button class="btn btn-white"
-                                                                                        type="reset">Cancel</button>
-                                                                                    <button
-                                                                                        class="btn btn-sm btn-primary login-submit-cs"
-                                                                                        type="submit">Submit</button>
+                                                                                <div class="login-horizental cancel-wp pull-left form-bc-ele">
+                                                                                    <button class="btn btn-white" type="reset">Cancel</button>
+                                                                                    <button class="btn btn-sm btn-primary login-submit-cs" type="submit">Submit</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -181,32 +179,38 @@
                                                     <thead>
                                                         <tr>
                                                             <th data-field="state" data-checkbox="true"></th>
-                                                            <th data-field="id">ID</th>
-                                                            <th data-field="namaanggota" data-editable="false">Nama
-                                                                Anggota</th>
-                                                            <th data-field="alamat" data-editable="false">Alamat
-                                                            </th>
+                                                            <th data-field="no">#</th>
+                                                            <th data-field="namaanggota" data-editable="false">Nama Anggota</th>
                                                             <th data-field="telpon" data-editable="false">Nomor Telepon</th>
+                                                            <th data-field="alamat" data-editable="false">Alamat</th>
+                                                            <th data-field="telpon" data-editable="false">Terdaftar</th>
                                                             <th data-field="action">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        <?php
+                                                            $sql = "SELECT * FROM anggota ORDER BY id_anggota ASC";
+                                                            $result = mysqli_query($conn, $sql);
+                                                
+                                                            $count = 1;
+                                                        
+                                                            if (mysqli_num_rows($result)>0){
+                                                                while ($row = mysqli_fetch_assoc($result)){
+                                                        ?>
                                                         <tr>
                                                             <td></td>
-                                                            <td>ANG001</td>
-                                                            <td>Maimunah</td>
-                                                            <td>Situ Babakan</td>
-                                                            <td>082185676755</td>
+                                                            <td><?php echo $count; ?></td>
+                                                            <td><?php echo $row['nama_lengkap']; ?></td>
+                                                            <td><?php echo $row['nomor_telp']; ?></td>
+                                                            <td><?php echo $row['alamat']; ?></td>
+                                                            <td><?php echo date('D, d F Y', strtotime($row['create_at'])); ?></td>
                                                             <td class="datatable-ct"><i class="fa fa-check"></i></td>
                                                         </tr>
-                                                        <tr>
-                                                        <td></td>
-                                                            <td>ANG001</td>
-                                                            <td>Maimunah</td>
-                                                            <td>Situ Babakan</td>
-                                                            <td>082185676755</td>
-                                                            <td class="datatable-ct"><i class="fa fa-check"></i></td>
-                                                        </tr>
+                                                        <?php
+                                                            $count = $count + 1;
+                                                            }
+                                                            }
+                                                        ?>
                                                     </tbody>
                                                 </table>
                                             </div>

@@ -1,3 +1,11 @@
+<?php
+
+require_once  "function/session.php";
+
+$access = $_SESSION['role'];
+
+?>
+
 <!doctype html>
 <html class="no-js" lang="en">
 
